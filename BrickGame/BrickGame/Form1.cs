@@ -1,48 +1,107 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using System.Windows.Forms;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 
-namespace BrickGame
+namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
     {
+        const int WTileSize = 16;
+        const int HTileSize = 9;
+
+        string[] Map;
+
+        Image Human;
+        Image HumanF;
+        Image HumanL;
+        Image HumanR;
+        Image HumanB;
+        Image Wall;
+        Image Road;
+        Image Box;
+        Image Dot;
+        int WTile;
+        int HTile;
+
+        int XHuman;
+        int YHuman;
         public Form1()
         {
             InitializeComponent();
-            ClientSize = new Size(300,300);
-            
+
+            HumanF = new Bitmap(BrickGame.Properties.Resources.HumanF);
+            WTile = HumanF.Width;
+            HTile = HumanF.Height;
+            ClientSize = new Size(WTileSize * WTile, HTileSize * HTile);
+            HumanL = new Bitmap(BrickGame.Properties.Resources.HumanL);
+            HumanR = new Bitmap(BrickGame.Properties.Resources.HumanR);
+            HumanB = new Bitmap(BrickGame.Properties.Resources.HumanB);
+            Human = HumanF;
+            Wall = new Bitmap(BrickGame.Properties.Resources.Wall);
+            Road = new Bitmap(BrickGame.Properties.Resources.Road);
+            Box = new Bitmap(BrickGame.Properties.Resources.Box);
+            Dot = new Bitmap(BrickGame.Properties.Resources.Dot);
+
+            XHuman = 0;
+            YHuman = 0;
+
+            string[] TempMap = { "################",
+                                 "          #    #",
+                                 "###### B  .  ## ",
+                                 "#BBB ###########",
+                                 "####   #####  ##",
+                                 "#              #",
+                                 "## B###        #",
+                                 "#B        ###   ",
+                                 "#######         "};
+            Map = TempMap;
         }
-       
 
-        private void Form1_Paint_1(object sender, PaintEventArgs e)
+        private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            //Graphics g = CreateGraphics();
-            //Pen pen = new Pen(Color.Black);
-            //Point startPoint = new Point(45, 45);
-            //Point endPoint = new Point(150, 150);
+            for (int j = 0; j < HTileSize; ++j)
+            {
+                for (int i = 0; i < WTileSize; ++i)
+                {
+                    if ('#' == Map[j][i])
+                    {
+                        e.Graphics.DrawImage(Wall, WTile * i, HTile * j);
+                    }
+                    else if ('B' == Map[j][i])
+                    {
+                        e.Graphics.DrawImage(Box, WTile * i, HTile * j);
+                    }
+                }
+            }
 
-            //pen.Width = 5.0f;
+        }
 
-            //g.DrawLine(pen, startPoint, endPoint);
-            //g.DrawLine(pen, 150, 45, 45, 150);
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Left:
+                    XHuman = XHuman - 10;
+                    Human = HumanL;
+                    break;
+                case Keys.Right:
+                    XHuman = XHuman + 10;
+                    Human = HumanR;
+                    break;
+                case Keys.Up:
+                    YHuman = YHuman - 10;
+                    Human = HumanB;
+                    break;
+                case Keys.Down:
+                    YHuman = YHuman + 10;
+                    Human = HumanF;
+                    break;
+                default:
+                    return;
+            }
 
-            //Graphics g = CreateGraphics();
-            //Rectangle r = new Rectangle(50, 50, 150, 100);
-            //g.FillRectangle(Brushes.Salmon, r);
-            //g.DrawRectangle(new Pen(Color.AliceBlue), r);
+            Refresh();
 
-            Image img = new Bitmap(Properties.Resources.Image1);
-            e.Graphics.DrawImage(img, 0, 0);
-
-
-        
         }
     }
 }

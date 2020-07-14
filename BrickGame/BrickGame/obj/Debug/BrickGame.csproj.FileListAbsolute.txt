@@ -8,3 +8,13 @@ C:\SRC\BrickGame\BrickGame\bin\Debug\BrickGame.pdb
 C:\SRC\BrickGame\BrickGame\obj\Debug\BrickGame.exe
 C:\SRC\BrickGame\BrickGame\obj\Debug\BrickGame.pdb
 C:\SRC\BrickGame\BrickGame\obj\Debug\BrickGame.Form1.resources
+C:\SRC\Game\BrickGame\BrickGame\bin\Debug\BrickGame.exe.config
+C:\SRC\Game\BrickGame\BrickGame\bin\Debug\BrickGame.exe
+C:\SRC\Game\BrickGame\BrickGame\bin\Debug\BrickGame.pdb
+C:\SRC\Game\BrickGame\BrickGame\obj\Debug\BrickGame.csprojAssemblyReference.cache
+C:\SRC\Game\BrickGame\BrickGame\obj\Debug\BrickGame.Properties.Resources.resources
+C:\SRC\Game\BrickGame\BrickGame\obj\Debug\BrickGame.csproj.GenerateResource.cache
+C:\SRC\Game\BrickGame\BrickGame\obj\Debug\BrickGame.csproj.CoreCompileInputs.cache
+C:\SRC\Game\BrickGame\BrickGame\obj\Debug\BrickGame.exe
+C:\SRC\Game\BrickGame\BrickGame\obj\Debug\BrickGame.pdb
+C:\SRC\Game\BrickGame\BrickGame\obj\Debug\WindowsFormsApp1.Form1.resources
