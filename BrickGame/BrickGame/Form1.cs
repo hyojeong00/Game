@@ -8,7 +8,9 @@ namespace WindowsFormsApp1
     {
         const int WTileSize = 16;
         const int HTileSize = 9;
+        const string Title = "푸시푸시 - 안드로이드의 모험";
 
+        char[][] MapReal;
         string[] Map;
 
         Image Human;
@@ -25,9 +27,15 @@ namespace WindowsFormsApp1
 
         int XHuman;
         int YHuman;
+        int XHumanOld;
+        int YHumanOld;
         public Form1()
         {
             InitializeComponent();
+            Text = Title;
+
+            
+
 
             HumanF = new Bitmap(BrickGame.Properties.Resources.HumanF);
             WTile = HumanF.Width;
@@ -46,60 +54,118 @@ namespace WindowsFormsApp1
             YHuman = 0;
 
             string[] TempMap = { "################",
-                                 "          #    #",
-                                 "###### B  .  ## ",
-                                 "#BBB ###########",
-                                 "####   #####  ##",
-                                 "#              #",
+                                 "#         #    #",
+                                 "###### B  .  ###",
+                                 "#BBB ####    ###",
+                                 "####   ####   ##",
+                                 "#        @     #",
                                  "## B###        #",
-                                 "#B        ###   ",
-                                 "#######         "};
+                                 "#B        ###  #",
+                                 "################"
+                                };
+            MapReal = new char[HTileSize][];
+            for(int i = 0; i<HTileSize;++i) //9줄 반복
+            {
+                MapReal[i] = TempMap[i].ToCharArray();
+            }
             Map = TempMap;
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
+            string t = "test";
+            char[] ct = t.ToCharArray();
+
+            Image Temp=Wall;
             for (int j = 0; j < HTileSize; ++j)
             {
                 for (int i = 0; i < WTileSize; ++i)
                 {
-                    if ('#' == Map[j][i])
+                    switch(MapReal[j][i])
                     {
-                        e.Graphics.DrawImage(Wall, WTile * i, HTile * j);
-                    }
-                    else if ('B' == Map[j][i])
-                    {
-                        e.Graphics.DrawImage(Box, WTile * i, HTile * j);
-                    }
-                }
-            }
+                        case '#': Temp = Wall;
+                            break;
+                        case ' ':
+                            Temp = Road;
+                            break;
+                        case '.':
+                            Temp = Dot;
+                            break;
+                        case 'B':
+                            Temp = Box;
+                            break;
+                        case '@':
+                            Temp = Human;
+                            XHuman=i;
+                            YHuman=j;
+                            Text = Title + "["+XHuman+","+YHuman+"]";
+                            break;
 
+                    }
+                    e.Graphics.DrawImage(Temp, WTile * i, HTile * j);
+
+                    //if ('#' == Map[j][i])
+                    //{
+                    //    Temp = Wall;
+                    //}
+                    //else if ('B' == Map[j][i])
+                    //{
+                    //    Temp = Box;
+                    //}
+                    //else if ('.' == Map[j][i])
+                    //{
+                    //    Temp = Dot;
+                    //}
+                    //else //if (' ' == Map[j][i])
+                    //{
+                    //    Temp = Road;                        
+                    //}
+                }
+                
+            }
+        }
+
+        private void Move()
+        {
+            if('#' == MapReal[YHuman][XHuman])
+            {
+                return;
+            }
+            if ('B' == MapReal[YHuman][XHuman])
+            {
+                MapReal[YHuman*2-YHumanOld][XHuman*2-XHumanOld] = 'B';
+            }
+            MapReal[YHumanOld][XHumanOld] = ' ';
+            MapReal[YHuman][XHuman] = '@';
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
+            YHumanOld = YHuman;
+            XHumanOld = XHuman;
+
             switch (e.KeyCode)
             {
                 case Keys.Left:
-                    XHuman = XHuman - 10;
+                    --XHuman;
                     Human = HumanL;
                     break;
                 case Keys.Right:
-                    XHuman = XHuman + 10;
+                    ++XHuman;
                     Human = HumanR;
                     break;
                 case Keys.Up:
-                    YHuman = YHuman - 10;
+                    --YHuman;
                     Human = HumanB;
                     break;
                 case Keys.Down:
-                    YHuman = YHuman + 10;
+                    ++YHuman;
                     Human = HumanF;
                     break;
                 default:
                     return;
             }
-
+            Move();
             Refresh();
 
         }
